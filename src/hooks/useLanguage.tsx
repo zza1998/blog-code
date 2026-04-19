@@ -33,6 +33,8 @@ const translations: Translations = {
   backToLibrary: { en: 'Back to Library', zh: '返回书库' },
   thanksForReading: { en: 'Thanks for reading!', zh: '感谢阅读！' },
   allCategories: { en: 'All Categories', zh: '全部分类' },
+  libraryTitle: { en: 'Library', zh: '书库' },
+  totalArticles: { en: 'Articles', zh: '篇文章' },
 };
 
 interface LanguageContextType {

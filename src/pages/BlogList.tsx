@@ -72,10 +72,10 @@ export default function BlogList() {
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-12">
         <div>
           <h1 className="text-4xl sm:text-5xl font-extrabold text-gray-900 dark:text-white mb-4 tracking-tight">
-            Library
+            {t('libraryTitle')}
           </h1>
           <p className="text-lg text-gray-600 dark:text-gray-300 font-medium">
-            {filteredPosts.length} {t('articlesFound')}
+            {filteredPosts.length} {t('totalArticles')}
           </p>
         </div>
 
