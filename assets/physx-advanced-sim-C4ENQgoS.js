@@ -1,4 +1,4 @@
-import{p as e}from"./proxy-CFoEGod3.js";var t=e({default:()=>n}),n=`---
+import{p as e}from"./createLucideIcon-xTYf-7rV.js";var t=e({default:()=>n}),n=`---
 title: Advanced Simulations: Cloth and Fluids
 date: 2026-04-10
 category: Advanced

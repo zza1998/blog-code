@@ -1,4 +1,4 @@
-import{p as e}from"./proxy-CFoEGod3.js";var t=e({default:()=>n}),n=`---
+import{p as e}from"./createLucideIcon-xTYf-7rV.js";var t=e({default:()=>n}),n=`---
 title: Debugging with PhysX Visual Debugger (PVD)
 date: 2026-04-21
 category: Tools
