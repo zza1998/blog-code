@@ -5,74 +5,79 @@ import { POSTS } from '../data/posts';
 
 const BackgroundEffect = () => {
   return (
-    <div className="absolute inset-0 overflow-hidden -z-10 pointer-events-none">
-      {/* Dynamic Mesh Gradients */}
+    <div className="fixed inset-0 overflow-hidden -z-20 pointer-events-none bg-slate-50 dark:bg-[#020617]">
+      {/* High-visibility Dynamic Mesh Gradients */}
       <motion.div
         animate={{
-          scale: [1, 1.2, 1],
-          x: [0, 50, 0],
-          y: [0, 30, 0],
+          scale: [1, 1.4, 1],
+          x: [-100, 100, -100],
+          y: [-50, 50, -50],
         }}
         transition={{
           duration: 15,
           repeat: Infinity,
           ease: "easeInOut"
         }}
-        className="absolute -top-[10%] -left-[10%] w-[70%] h-[70%] bg-primary-400/20 dark:bg-primary-500/10 rounded-full blur-[100px]"
+        className="absolute top-[-20%] left-[-10%] w-[80%] h-[80%] bg-blue-500/20 dark:bg-blue-600/20 rounded-full blur-[100px]"
       />
       <motion.div
         animate={{
-          scale: [1.2, 1, 1.2],
-          x: [0, -50, 0],
-          y: [0, 50, 0],
+          scale: [1.3, 1, 1.3],
+          x: [100, -100, 100],
+          y: [50, -50, 50],
         }}
         transition={{
           duration: 20,
           repeat: Infinity,
           ease: "easeInOut"
         }}
-        className="absolute top-[10%] -right-[10%] w-[60%] h-[60%] bg-blue-400/20 dark:bg-blue-600/10 rounded-full blur-[120px]"
+        className="absolute bottom-[-20%] right-[-10%] w-[80%] h-[80%] bg-indigo-500/20 dark:bg-indigo-700/20 rounded-full blur-[120px]"
       />
       <motion.div
         animate={{
-          scale: [1, 1.3, 1],
-          y: [0, -50, 0],
+          scale: [1, 1.5, 1],
+          rotate: [0, 360],
         }}
         transition={{
-          duration: 18,
+          duration: 25,
           repeat: Infinity,
-          ease: "easeInOut"
+          ease: "linear"
         }}
-        className="absolute bottom-[0%] left-[10%] w-[50%] h-[50%] bg-indigo-400/20 dark:bg-indigo-600/10 rounded-full blur-[110px]"
+        className="absolute top-[20%] left-[20%] w-[60%] h-[60%] bg-primary-500/15 dark:bg-primary-600/15 rounded-full blur-[110px]"
       />
       
-      {/* Decorative Grid with perspective feel */}
-      <div className="absolute inset-0 opacity-[0.15] dark:opacity-[0.2]" 
-           style={{ 
-             backgroundImage: `linear-gradient(#4f46e5 1px, transparent 1px), linear-gradient(90deg, #4f46e5 1px, transparent 1px)`,
-             backgroundSize: '40px 40px',
-             maskImage: 'radial-gradient(ellipse at center, black, transparent 80%)',
-             WebkitMaskImage: 'radial-gradient(ellipse at center, black, transparent 80%)'
-           }}>
-      </div>
+      {/* Structural Grid - Highly Visible */}
+      <div 
+        className="absolute inset-0 opacity-[0.2] dark:opacity-[0.4]" 
+        style={{ 
+          backgroundImage: `
+            linear-gradient(to right, #4f46e5 1px, transparent 1px),
+            linear-gradient(to bottom, #4f46e5 1px, transparent 1px)
+          `,
+          backgroundSize: '60px 60px',
+          maskImage: 'radial-gradient(circle at center, black, transparent 90%)',
+          WebkitMaskImage: 'radial-gradient(circle at center, black, transparent 90%)'
+        }}
+      />
 
-      {/* Floating particles or "nodes" simulation feel */}
-      {[...Array(6)].map((_, i) => (
+      {/* Floating Physics Nodes */}
+      {[...Array(12)].map((_, i) => (
         <motion.div
           key={i}
           animate={{
-            y: [0, -20, 0],
-            opacity: [0.3, 0.6, 0.3],
+            y: [0, Math.sin(i) * 50, 0],
+            x: [0, Math.cos(i) * 30, 0],
+            opacity: [0.2, 0.5, 0.2],
           }}
           transition={{
-            duration: 5 + i,
+            duration: 4 + (i % 3),
             repeat: Infinity,
-            delay: i * 2,
+            delay: i * 0.5,
           }}
-          className="absolute w-1 h-1 bg-primary-500 rounded-full"
+          className="absolute w-2 h-2 bg-primary-500/40 rounded-full shadow-[0_0_15px_rgba(99,102,241,0.5)]"
           style={{
-            top: `${20 + i * 10}%`,
-            left: `${15 + i * 15}%`,
+            top: `${10 + (i * 13) % 80}%`,
+            left: `${10 + (i * 17) % 80}%`,
           }}
         />
       ))}
@@ -82,27 +87,30 @@ const BackgroundEffect = () => {
 
 export default function Home() {
   const containerVariants = {
-    hidden: { opacity: 0, y: 20 },
+    hidden: { opacity: 0 },
     visible: {
       opacity: 1,
-      y: 0,
       transition: {
-        duration: 0.8,
-        staggerChildren: 0.2
+        duration: 0.5,
+        staggerChildren: 0.15
       }
     }
   };
 
   const itemVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: { opacity: 1, y: 0 }
+    hidden: { opacity: 0, y: 30 },
+    visible: { 
+      opacity: 1, 
+      y: 0,
+      transition: { type: "spring", stiffness: 100 }
+    }
   };
 
   return (
-    <div className="relative min-h-screen">
+    <div className="relative min-h-screen selection:bg-primary-500/30">
       <BackgroundEffect />
       
-      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-24 sm:py-32">
+      <div className="max-w-6xl mx-auto px-6 sm:px-10 py-32 sm:py-48">
         <motion.div
           variants={containerVariants}
           initial="hidden"
@@ -111,80 +119,84 @@ export default function Home() {
         >
           <motion.div
             variants={itemVariants}
-            className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary-500/10 text-primary-600 dark:text-primary-400 text-[10px] font-black uppercase tracking-[0.2em] mb-10 border border-primary-500/20 backdrop-blur-sm"
+            className="inline-flex items-center gap-3 px-5 py-2 rounded-full bg-primary-500/10 border border-primary-500/20 backdrop-blur-xl text-primary-600 dark:text-primary-400 text-xs font-black uppercase tracking-[0.3em] mb-12 shadow-sm"
           >
-            <span className="relative flex h-2 w-2">
+            <span className="relative flex h-2.5 w-2.5">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary-400 opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-primary-500"></span>
+              <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-primary-500"></span>
             </span>
-            Real-time Physics simulation
+            Real-time Simulation Engine
           </motion.div>
           
           <motion.h1
             variants={itemVariants}
-            className="text-7xl sm:text-9xl font-black text-gray-900 dark:text-white mb-10 tracking-tighter leading-[0.85]"
+            className="text-7xl sm:text-9xl font-black text-gray-900 dark:text-white mb-10 tracking-tighter leading-[0.8] flex flex-col items-center"
           >
-            Explore <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary-500 via-blue-500 to-indigo-600 dark:from-primary-400 dark:via-blue-400 dark:to-indigo-400 drop-shadow-sm">Physics</span>
+            <span className="block opacity-90">EXPLORE</span>
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary-500 via-blue-500 to-indigo-600 dark:from-primary-400 dark:via-blue-400 dark:to-indigo-300 drop-shadow-2xl">PHYSICS</span>
           </motion.h1>
           
           <motion.p
             variants={itemVariants}
-            className="text-xl sm:text-2xl text-gray-500 dark:text-gray-400 mb-14 max-w-2xl mx-auto leading-relaxed font-medium"
+            className="text-xl sm:text-2xl text-gray-600 dark:text-gray-400 mb-16 max-w-3xl mx-auto leading-relaxed font-medium"
           >
-            Deep dive into NVIDIA PhysX and the engineering behind modern real-time interactive worlds.
+            Mastering the mechanics of movement. A technical deep dive into NVIDIA PhysX and high-performance game engineering.
           </motion.p>
           
-          <motion.div variants={itemVariants} className="flex flex-col sm:flex-row justify-center gap-6">
+          <motion.div variants={itemVariants} className="flex flex-col sm:flex-row justify-center gap-8">
             <Link
               to="/blog"
-              className="group bg-gray-900 dark:bg-white text-white dark:text-gray-900 px-12 py-5 rounded-2xl font-black text-sm uppercase tracking-widest transition-all flex items-center justify-center gap-3 hover:scale-105 active:scale-95 shadow-2xl shadow-primary-500/20"
+              className="group bg-gray-900 dark:bg-white text-white dark:text-gray-900 px-14 py-6 rounded-3xl font-black text-sm uppercase tracking-[0.2em] transition-all flex items-center justify-center gap-4 hover:scale-105 active:scale-95 shadow-[0_20px_50px_rgba(99,102,241,0.3)] dark:shadow-[0_20px_50px_rgba(99,102,241,0.1)]"
             >
-              Start Learning 
-              <ArrowRight size={20} className="group-hover:translate-x-2 transition-transform" />
+              Enter Library
+              <ArrowRight size={22} className="group-hover:translate-x-2 transition-transform" />
             </Link>
             <Link
               to="/about"
-              className="bg-white/50 dark:bg-gray-800/50 backdrop-blur-md text-gray-900 dark:text-gray-100 px-12 py-5 rounded-2xl font-black text-sm uppercase tracking-widest hover:bg-white dark:hover:bg-gray-800 transition-all border border-gray-200 dark:border-gray-700 flex items-center justify-center hover:scale-105 active:scale-95 shadow-sm"
+              className="bg-white/40 dark:bg-slate-900/40 backdrop-blur-2xl text-gray-900 dark:text-gray-100 px-14 py-6 rounded-3xl font-black text-sm uppercase tracking-[0.2em] hover:bg-white/80 dark:hover:bg-slate-800 transition-all border border-gray-200 dark:border-gray-800 flex items-center justify-center hover:scale-105 active:scale-95 shadow-sm"
             >
               The Engineer
             </Link>
           </motion.div>
         </motion.div>
 
+        {/* Dynamic Showcase Section */}
         <motion.section
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
+          initial={{ opacity: 0, y: 50 }}
+          whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ delay: 0.4, duration: 1 }}
-          className="mt-60 relative z-10"
+          transition={{ duration: 1 }}
+          className="mt-64 relative z-10"
         >
-          <div className="flex items-center justify-between mb-16 border-b border-gray-100 dark:border-gray-800 pb-8">
+          <div className="flex items-end justify-between mb-20 border-b border-gray-200 dark:border-gray-800 pb-10">
             <div>
-              <h2 className="text-3xl font-black text-gray-900 dark:text-white tracking-tight uppercase italic">Latest Insights</h2>
-              <p className="text-gray-500 text-sm font-bold mt-2 uppercase tracking-widest">Recent technical publications</p>
+              <span className="text-primary-500 font-black text-xs tracking-[0.4em] uppercase mb-4 block">Archives</span>
+              <h2 className="text-5xl font-black text-gray-900 dark:text-white tracking-tighter">LATEST <span className="italic font-light">RESEARCH</span></h2>
             </div>
-            <Link to="/blog" className="group flex items-center gap-2 text-primary-600 dark:text-primary-400 font-black text-xs uppercase tracking-[0.2em] hover:opacity-70 transition-opacity">
-              Explore All <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
+            <Link to="/blog" className="group flex items-center gap-3 text-gray-900 dark:text-white font-black text-xs uppercase tracking-[0.2em] hover:text-primary-500 transition-colors">
+              SEE ALL <ArrowRight size={16} className="group-hover:translate-x-2 transition-transform" />
             </Link>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-14">
             {POSTS.slice(0, 3).map((post) => (
               <Link key={post.id} to={`/blog/${post.id}`} className="group block">
-                <div className="aspect-[4/5] bg-gray-100 dark:bg-gray-800 rounded-[2.5rem] mb-8 overflow-hidden shadow-2xl border border-gray-100 dark:border-gray-800 transition-transform duration-500 group-hover:-translate-y-2">
+                <div className="aspect-[3/4] bg-gray-100 dark:bg-gray-800 rounded-[3rem] mb-10 overflow-hidden shadow-2xl border border-gray-100 dark:border-gray-800 transition-all duration-700 group-hover:-translate-y-4 group-hover:shadow-primary-500/20">
                   <img 
                     src={post.image} 
                     alt={post.title} 
-                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000 ease-out"
+                    className="w-full h-full object-cover grayscale-[0.5] group-hover:grayscale-0 group-hover:scale-110 transition-all duration-1000 ease-out"
                   />
                 </div>
                 <div className="px-4">
-                  <span className="text-[10px] font-black uppercase tracking-[0.3em] text-primary-600 dark:text-primary-400 mb-4 block">{post.category}</span>
-                  <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-4 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors leading-tight tracking-tight">
+                  <div className="flex items-center gap-3 mb-5">
+                    <span className="w-8 h-[1px] bg-primary-500"></span>
+                    <span className="text-[10px] font-black uppercase tracking-[0.3em] text-primary-600 dark:text-primary-400">{post.category}</span>
+                  </div>
+                  <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-5 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors leading-tight">
                     {post.title}
                   </h3>
-                  <div className="w-10 h-1 bg-gray-100 dark:bg-gray-800 mb-6 group-hover:w-full group-hover:bg-primary-500 transition-all duration-500" />
+                  <div className="w-0 h-1 bg-primary-500 group-hover:w-full transition-all duration-700" />
                 </div>
               </Link>
             ))}
