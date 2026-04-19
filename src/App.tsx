@@ -9,7 +9,7 @@ import About from './pages/About';
 function App() {
   return (
     <Router>
-      <div className="min-h-screen flex flex-col bg-white dark:bg-gray-900 transition-colors duration-300 font-sans">
+      <div className="min-h-screen flex flex-col transition-colors duration-300 font-sans">
         <Navbar />
         <main className="flex-grow">
           <Routes>
