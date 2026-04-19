@@ -9,12 +9,13 @@ export interface Post {
   image: string;
 }
 
-// Simple frontmatter parser to avoid node.js polyfills
+// Simple frontmatter parser
 function parseFrontmatter(fileContent: string) {
+  const str = String(fileContent);
   const frontmatterRegex = /^---\s*\n([\s\S]*?)\n---\s*\n([\s\S]*)$/;
-  const match = frontmatterRegex.exec(fileContent);
+  const match = frontmatterRegex.exec(str);
   
-  if (!match) return { data: {}, content: fileContent };
+  if (!match) return { data: {}, content: str };
   
   const yamlBlock = match[1];
   const content = match[2];
@@ -30,8 +31,12 @@ function parseFrontmatter(fileContent: string) {
   return { data, content };
 }
 
-// Use Vite's glob import to find all markdown files in the posts directory
-const modules = import.meta.glob('/src/content/posts/*.md', { eager: true, query: '?raw' });
+// Use eager glob with query for raw text
+const modules = import.meta.glob('/src/content/posts/*.md', { 
+  eager: true, 
+  query: '?raw',
+  import: 'default'
+});
 
 export const POSTS: Post[] = Object.entries(modules).map(([path, rawContent]) => {
   const fileName = path.split('/').pop()?.replace('.md', '') || '';
