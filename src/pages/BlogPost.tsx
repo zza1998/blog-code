@@ -1,11 +1,9 @@
 import { motion } from 'framer-motion';
-import { useParams, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { ArrowLeft, Calendar, Clock } from 'lucide-react';
 
 export default function BlogPost() {
-  const { id } = useParams();
-
-  // Simulated post content
+  // Post content is currently static, id could be used to fetch real data later
   const post = {
     title: 'The Future of Web Development',
     date: '2026-04-19',

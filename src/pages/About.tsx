@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { Github, Twitter, Mail, Code2, Palette, Zap } from 'lucide-react';
+import { Mail, Code2, Palette, Zap, ExternalLink, Link2 } from 'lucide-react';
 
 const SKILLS = [
   { icon: <Code2 size={18} />, label: 'Frontend Development' },
@@ -49,10 +49,10 @@ export default function About() {
           <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">Let's Connect</h2>
           <div className="flex flex-wrap gap-4 not-prose">
             <a href="#" className="flex items-center gap-2 px-6 py-3 bg-gray-900 dark:bg-white text-white dark:text-gray-900 rounded-full font-medium hover:opacity-90 transition-opacity">
-              <Twitter size={18} /> Twitter
+              <Link2 size={18} /> Twitter
             </a>
             <a href="#" className="flex items-center gap-2 px-6 py-3 bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-gray-100 rounded-full font-medium hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">
-              <Github size={18} /> GitHub
+              <ExternalLink size={18} /> GitHub
             </a>
             <a href="mailto:hello@example.com" className="flex items-center gap-2 px-6 py-3 bg-primary-600 text-white rounded-full font-medium hover:bg-primary-700 transition-colors">
               <Mail size={18} /> Email

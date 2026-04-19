@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { Calendar, Clock, ChevronRight } from 'lucide-react';
+import { Calendar, Clock } from 'lucide-react';
 
 const POSTS = [
   {
