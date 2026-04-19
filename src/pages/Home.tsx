@@ -6,17 +6,18 @@ import { POSTS } from '../data/posts';
 export default function Home() {
   const containerVariants: Variants = {
     hidden: { opacity: 0 },
-    visible: { opacity: 1, transition: { staggerChildren: 0.15 } }
+    visible: { opacity: 1, transition: { staggerChildren: 0.1 } }
   };
 
   const itemVariants: Variants = {
-    hidden: { opacity: 0, y: 30 },
+    hidden: { opacity: 0, y: 20 },
     visible: { opacity: 1, y: 0, transition: { type: "spring", stiffness: 100 } }
   };
 
   return (
     <div className="relative min-h-screen selection:bg-primary-500/30">
       <div className="max-w-6xl mx-auto px-6 sm:px-10 relative z-10">
+        {/* Full Viewport Hero Section */}
         <div className="min-h-[calc(100vh-4rem)] flex flex-col justify-center py-20">
           <motion.div
             variants={containerVariants}
@@ -26,7 +27,7 @@ export default function Home() {
           >
             <motion.div
               variants={itemVariants}
-              className="inline-flex items-center gap-3 px-5 py-2 rounded-full bg-primary-500/10 border border-primary-500/20 backdrop-blur-xl text-primary-600 dark:text-primary-400 text-xs font-black uppercase tracking-[0.3em] mb-12 shadow-sm"
+              className="inline-flex items-center gap-3 px-5 py-2 rounded-full bg-primary-500/10 border border-primary-500/20 text-primary-600 dark:text-primary-400 text-[10px] font-black uppercase tracking-[0.3em] mb-12 shadow-sm"
             >
               <span className="relative flex h-2.5 w-2.5">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary-400 opacity-75"></span>
@@ -60,7 +61,7 @@ export default function Home() {
               </Link>
               <Link
                 to="/about"
-                className="bg-white/40 dark:bg-slate-900/40 backdrop-blur-2xl text-gray-900 dark:text-gray-100 px-14 py-6 rounded-3xl font-black text-sm uppercase tracking-[0.2em] hover:bg-white/80 dark:hover:bg-slate-800 transition-all border border-gray-200 dark:border-gray-800 flex items-center justify-center hover:scale-105 active:scale-95 shadow-sm"
+                className="bg-white dark:bg-slate-900 text-gray-900 dark:text-gray-100 px-14 py-6 rounded-3xl font-black text-sm uppercase tracking-[0.2em] hover:bg-gray-50 dark:hover:bg-slate-800 transition-all border border-gray-200 dark:border-gray-800 flex items-center justify-center hover:scale-105 active:scale-95 shadow-sm"
               >
                 The Engineer
               </Link>

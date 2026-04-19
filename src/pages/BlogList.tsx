@@ -66,7 +66,7 @@ export default function BlogList() {
             value={searchQuery}
             onChange={handleSearchChange}
             placeholder="Search articles..."
-            className="block w-full pl-11 pr-10 py-3 bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm border-2 border-gray-100 dark:border-gray-700 rounded-2xl text-gray-900 dark:text-white placeholder-gray-500 focus:border-primary-500 transition-all shadow-sm"
+            className="block w-full pl-11 pr-10 py-3 bg-white dark:bg-gray-800 border-2 border-gray-100 dark:border-gray-700 rounded-2xl text-gray-900 dark:text-white placeholder-gray-500 focus:border-primary-500 transition-all shadow-sm"
           />
           {searchQuery && (
             <button 
@@ -90,7 +90,7 @@ export default function BlogList() {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, scale: 0.95 }}
                 transition={{ duration: 0.4, delay: index * 0.05 }}
-                className="group flex flex-col md:flex-row bg-white/70 dark:bg-gray-900/40 backdrop-blur-md rounded-[2.5rem] overflow-hidden hover:bg-white dark:hover:bg-gray-800/60 transition-all duration-500 border border-gray-100 dark:border-gray-800"
+                className="group flex flex-col md:flex-row bg-white dark:bg-gray-900 rounded-[2.5rem] overflow-hidden hover:shadow-xl transition-all duration-500 border border-gray-100 dark:border-gray-800"
               >
                 <Link 
                   to={`/blog/${post.id}`} 
@@ -142,7 +142,7 @@ export default function BlogList() {
             <motion.div 
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              className="text-center py-20 bg-gray-50/50 dark:bg-gray-800/30 backdrop-blur-sm rounded-[2.5rem]"
+              className="text-center py-20 bg-white dark:bg-gray-900 rounded-[2.5rem]"
             >
               <Search size={48} className="mx-auto text-gray-300 dark:text-gray-600 mb-4" />
               <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">No results found</h3>
@@ -163,7 +163,7 @@ export default function BlogList() {
           <button
             onClick={() => setCurrentPage(prev => Math.max(1, prev - 1))}
             disabled={currentPage === 1}
-            className="p-4 rounded-2xl bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm border border-gray-100 dark:border-gray-700 text-gray-600 dark:text-gray-300 disabled:opacity-30 disabled:cursor-not-allowed hover:bg-white dark:hover:bg-gray-700 transition-colors shadow-sm"
+            className="p-4 rounded-2xl bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700 text-gray-600 dark:text-gray-300 disabled:opacity-30 disabled:cursor-not-allowed hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors shadow-sm"
           >
             <ChevronLeft size={20} />
           </button>
@@ -176,7 +176,7 @@ export default function BlogList() {
                 className={`w-12 h-12 rounded-2xl text-sm font-bold transition-all ${
                   currentPage === i + 1 
                     ? 'bg-primary-600 text-white shadow-lg shadow-primary-500/30 scale-110' 
-                    : 'bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm text-gray-500 dark:text-gray-300 hover:bg-white dark:hover:bg-gray-700 border border-gray-100 dark:border-gray-700 shadow-sm'
+                    : 'bg-white dark:bg-gray-800 text-gray-500 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 border border-gray-100 dark:border-gray-700 shadow-sm'
                 }`}
               >
                 {i + 1}
@@ -187,7 +187,7 @@ export default function BlogList() {
           <button
             onClick={() => setCurrentPage(prev => Math.min(totalPages, prev + 1))}
             disabled={currentPage === totalPages}
-            className="p-4 rounded-2xl bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm border border-gray-100 dark:border-gray-700 text-gray-600 dark:text-gray-300 disabled:opacity-30 disabled:cursor-not-allowed hover:bg-white dark:hover:bg-gray-700 transition-colors shadow-sm"
+            className="p-4 rounded-2xl bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700 text-gray-600 dark:text-gray-300 disabled:opacity-30 disabled:cursor-not-allowed hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors shadow-sm"
           >
             <ChevronRight size={20} />
           </button>

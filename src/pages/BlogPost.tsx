@@ -1,12 +1,25 @@
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { useParams, Link } from 'react-router-dom';
 import { ArrowLeft, Calendar, Clock } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
-import { POSTS } from '../data/posts';
+import { POSTS, getPostContent } from '../data/posts';
 
 export default function BlogPost() {
   const { id } = useParams();
   const post = POSTS.find(p => p.id === id);
+  const [content, setContent] = useState<string>('');
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    if (id) {
+      setIsLoading(true);
+      getPostContent(id).then(fullContent => {
+        setContent(fullContent);
+        setIsLoading(false);
+      });
+    }
+  }, [id]);
 
   if (!post) {
     return (
@@ -56,7 +69,15 @@ export default function BlogPost() {
         </header>
 
         <div className="prose dark:prose-invert max-w-none text-gray-800 dark:text-gray-200 text-lg leading-relaxed">
-          <ReactMarkdown>{post.content}</ReactMarkdown>
+          {isLoading ? (
+            <div className="flex flex-col gap-4">
+              <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded-full w-full animate-pulse" />
+              <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded-full w-3/4 animate-pulse" />
+              <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded-full w-5/6 animate-pulse" />
+            </div>
+          ) : (
+            <ReactMarkdown>{content}</ReactMarkdown>
+          )}
         </div>
       </article>
 
