@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import { useParams, Link } from 'react-router-dom';
 import { ArrowLeft, Calendar, Clock } from 'lucide-react';
+import ReactMarkdown from 'react-markdown';
 import { POSTS } from '../data/posts';
 
 export default function BlogPost() {
@@ -49,10 +50,9 @@ export default function BlogPost() {
           </div>
         </header>
 
-        <div
-          className="prose dark:prose-invert max-w-none text-gray-700 dark:text-gray-300 space-y-6 text-lg leading-relaxed"
-          dangerouslySetInnerHTML={{ __html: post.content }}
-        />
+        <div className="prose dark:prose-invert max-w-none text-gray-700 dark:text-gray-300">
+          <ReactMarkdown>{post.content}</ReactMarkdown>
+        </div>
       </article>
 
       <div className="mt-20 pt-12 border-t border-gray-100 dark:border-gray-800">
