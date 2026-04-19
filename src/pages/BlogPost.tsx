@@ -10,7 +10,7 @@ export default function BlogPost() {
 
   if (!post) {
     return (
-      <div className="max-w-3xl mx-auto px-4 py-20 text-center">
+      <div className="max-w-3xl mx-auto px-4 py-20 text-center relative z-10">
         <h1 className="text-2xl font-bold dark:text-white">Post not found</h1>
         <Link to="/blog" className="text-primary-600 mt-4 inline-block">Back to Articles</Link>
       </div>
@@ -21,24 +21,29 @@ export default function BlogPost() {
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-20"
+      className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-20 relative z-10"
     >
       <Link
         to="/blog"
-        className="inline-flex items-center gap-2 text-gray-500 hover:text-primary-600 transition-colors mb-12"
+        className="inline-flex items-center gap-2 text-gray-500 dark:text-gray-400 hover:text-primary-600 transition-colors mb-12 font-bold uppercase tracking-widest text-xs"
       >
-        <ArrowLeft size={18} /> Back to Articles
+        <ArrowLeft size={18} /> Back to Library
       </Link>
 
-      <article>
+      <article className="bg-white/60 dark:bg-gray-900/40 backdrop-blur-md p-8 md:p-12 rounded-[3rem] border border-gray-100 dark:border-gray-800 shadow-2xl">
         <header className="mb-12">
-          <div className="aspect-video w-full rounded-3xl overflow-hidden mb-8 shadow-2xl">
+          <div className="aspect-video w-full rounded-3xl overflow-hidden mb-10 shadow-2xl">
             <img src={post.image} alt={post.title} className="w-full h-full object-cover" />
           </div>
-          <h1 className="text-4xl sm:text-5xl font-bold text-gray-900 dark:text-white mb-6 leading-tight">
+          <div className="flex items-center gap-3 mb-6">
+            <span className="px-3 py-1 rounded-full bg-primary-500/10 text-primary-600 dark:text-primary-400 text-[10px] font-black uppercase tracking-[0.2em]">
+              {post.category}
+            </span>
+          </div>
+          <h1 className="text-4xl sm:text-5xl font-black text-gray-900 dark:text-white mb-8 leading-[1.1] tracking-tight">
             {post.title}
           </h1>
-          <div className="flex items-center gap-6 text-sm text-gray-500 dark:text-gray-400">
+          <div className="flex items-center gap-6 text-sm font-bold text-gray-400 dark:text-gray-500 uppercase tracking-widest">
             <div className="flex items-center gap-2">
               <Calendar size={16} />
               <span>{post.date}</span>
@@ -50,15 +55,15 @@ export default function BlogPost() {
           </div>
         </header>
 
-        <div className="prose dark:prose-invert max-w-none text-gray-700 dark:text-gray-300">
+        <div className="prose dark:prose-invert max-w-none text-gray-800 dark:text-gray-200 text-lg leading-relaxed">
           <ReactMarkdown>{post.content}</ReactMarkdown>
         </div>
       </article>
 
-      <div className="mt-20 pt-12 border-t border-gray-100 dark:border-gray-800">
-        <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-4">Thanks for reading!</h3>
-        <p className="text-gray-600 dark:text-gray-400">
-          If you enjoyed this deep dive into PhysX, feel free to explore other articles in the series or follow my journey.
+      <div className="mt-20 p-12 bg-white/40 dark:bg-gray-900/20 backdrop-blur-md rounded-[2.5rem] border border-gray-100 dark:border-gray-800">
+        <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-4 uppercase tracking-tight">Post Scriptum</h3>
+        <p className="text-gray-600 dark:text-gray-400 font-medium">
+          If you enjoyed this technical deep dive, feel free to explore other research in the series or reach out to me via the About page.
         </p>
       </div>
     </motion.div>
