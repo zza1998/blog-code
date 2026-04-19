@@ -1,4 +1,4 @@
-# My Modern Blog Frontend
+# PhysCode Blog Frontend
 
 A minimalist, high-performance blog frontend built with **React**, **Vite**, and **Tailwind CSS**.
 
