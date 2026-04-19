@@ -1,22 +1,20 @@
 import { motion } from 'framer-motion';
-import { Link } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import { ArrowLeft, Calendar, Clock } from 'lucide-react';
+import { POSTS } from '../data/posts';
 
 export default function BlogPost() {
-  // Post content is currently static, id could be used to fetch real data later
-  const post = {
-    title: 'The Future of Web Development',
-    date: '2026-04-19',
-    readTime: '5 min read',
-    content: `
-      <p>Web development is evolving at an unprecedented pace. From the rise of AI-assisted coding to the shift towards edge computing, the landscape is changing fast.</p>
-      <p>In this article, we explore the key trends that will define the next decade of the web. We'll look at how frameworks are becoming more opinionated yet more flexible, and how the developer experience is being prioritized more than ever before.</p>
-      <h2>Edge Computing and SSR</h2>
-      <p>Server-side rendering (SSR) is making a huge comeback, but not as we knew it. With edge functions, we can now run logic closer to the user than ever before, reducing latency to near zero.</p>
-      <h2>The Role of AI</h2>
-      <p>AI is not just about writing code; it's about optimizing it. We're seeing tools that can automatically refactor legacy codebases and suggest performance improvements in real-time.</p>
-    `
-  };
+  const { id } = useParams();
+  const post = POSTS.find(p => p.id === id);
+
+  if (!post) {
+    return (
+      <div className="max-w-3xl mx-auto px-4 py-20 text-center">
+        <h1 className="text-2xl font-bold dark:text-white">Post not found</h1>
+        <Link to="/blog" className="text-primary-600 mt-4 inline-block">Back to Articles</Link>
+      </div>
+    );
+  }
 
   return (
     <motion.div
@@ -33,6 +31,9 @@ export default function BlogPost() {
 
       <article>
         <header className="mb-12">
+          <div className="aspect-video w-full rounded-3xl overflow-hidden mb-8 shadow-2xl">
+            <img src={post.image} alt={post.title} className="w-full h-full object-cover" />
+          </div>
           <h1 className="text-4xl sm:text-5xl font-bold text-gray-900 dark:text-white mb-6 leading-tight">
             {post.title}
           </h1>
@@ -57,7 +58,7 @@ export default function BlogPost() {
       <div className="mt-20 pt-12 border-t border-gray-100 dark:border-gray-800">
         <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-4">Thanks for reading!</h3>
         <p className="text-gray-600 dark:text-gray-400">
-          If you enjoyed this article, feel free to share it or follow me on social media for more updates.
+          If you enjoyed this deep dive into PhysX, feel free to explore other articles in the series or follow my journey.
         </p>
       </div>
     </motion.div>
