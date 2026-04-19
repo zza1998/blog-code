@@ -32,6 +32,7 @@ const translations: Translations = {
   footerBuiltWith: { en: 'Built with React & Vite.', zh: '基于 React & Vite 构建。' },
   backToLibrary: { en: 'Back to Library', zh: '返回书库' },
   thanksForReading: { en: 'Thanks for reading!', zh: '感谢阅读！' },
+  allCategories: { en: 'All Categories', zh: '全部分类' },
 };
 
 interface LanguageContextType {

@@ -1,6 +1,6 @@
 import { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Link } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 import { Calendar, ArrowRight, Search, ChevronLeft, ChevronRight, X } from 'lucide-react';
 import { POSTS } from '../data/posts';
 import { useLanguage } from '../hooks/useLanguage';
@@ -9,22 +9,45 @@ const POSTS_PER_PAGE = 4;
 
 export default function BlogList() {
   const { t } = useLanguage();
+  const [searchParams, setSearchParams] = useSearchParams();
   const [searchQuery, setSearchQuery] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
 
+  // Extract unique categories from POSTS
+  const categories = useMemo(() => {
+    const cats = new Set(POSTS.map(post => post.category));
+    return Array.from(cats).sort();
+  }, []);
+
+  const selectedCategory = searchParams.get('category') || 'All';
+
+  // Filter posts based on search query AND selected category
   const filteredPosts = useMemo(() => {
     const query = searchQuery.toLowerCase().trim();
-    if (!query) return POSTS;
     
-    return POSTS.filter(post => 
-      post.title.toLowerCase().includes(query) ||
-      post.excerpt.toLowerCase().includes(query) ||
-      post.category.toLowerCase().includes(query)
-    );
-  }, [searchQuery]);
+    return POSTS.filter(post => {
+      const matchesSearch = !query || 
+        post.title.toLowerCase().includes(query) ||
+        post.excerpt.toLowerCase().includes(query);
+      
+      const matchesCategory = selectedCategory === 'All' || post.category === selectedCategory;
+      
+      return matchesSearch && matchesCategory;
+    });
+  }, [searchQuery, selectedCategory]);
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchQuery(e.target.value);
+    setCurrentPage(1);
+  };
+
+  const handleCategoryChange = (cat: string) => {
+    if (cat === 'All') {
+      searchParams.delete('category');
+    } else {
+      searchParams.set('category', cat);
+    }
+    setSearchParams(searchParams);
     setCurrentPage(1);
   };
 
@@ -46,7 +69,7 @@ export default function BlogList() {
       exit={{ opacity: 0, y: 20 }}
       className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-20 relative z-10"
     >
-      <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-16">
+      <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-12">
         <div>
           <h1 className="text-4xl sm:text-5xl font-extrabold text-gray-900 dark:text-white mb-4 tracking-tight">
             Library
@@ -78,6 +101,33 @@ export default function BlogList() {
         </div>
       </div>
 
+      {/* Category Filter Pills */}
+      <div className="flex flex-wrap gap-2 mb-16">
+        <button
+          onClick={() => handleCategoryChange('All')}
+          className={`px-6 py-2.5 rounded-full text-xs font-black uppercase tracking-widest transition-all duration-300 ${
+            selectedCategory === 'All'
+              ? 'bg-primary-600 text-white shadow-lg shadow-primary-500/20'
+              : 'bg-white/50 dark:bg-gray-800/50 text-gray-500 dark:text-gray-400 hover:bg-white dark:hover:bg-gray-700'
+          }`}
+        >
+          {t('allCategories')}
+        </button>
+        {categories.map(cat => (
+          <button
+            key={cat}
+            onClick={() => handleCategoryChange(cat)}
+            className={`px-6 py-2.5 rounded-full text-xs font-black uppercase tracking-widest transition-all duration-300 ${
+              selectedCategory === cat
+                ? 'bg-primary-600 text-white shadow-lg shadow-primary-500/20'
+                : 'bg-white/50 dark:bg-gray-800/50 text-gray-500 dark:text-gray-400 hover:bg-white dark:hover:bg-gray-700'
+            }`}
+          >
+            {cat}
+          </button>
+        ))}
+      </div>
+
       <div className="flex flex-col gap-10">
         <AnimatePresence mode="popLayout">
           {currentPosts.length > 0 ? (
@@ -105,9 +155,12 @@ export default function BlogList() {
                 
                 <div className="p-8 md:p-12 flex flex-col flex-grow md:w-[60%] justify-center">
                   <div className="flex items-center gap-3 mb-6">
-                    <span className="px-3 py-1 rounded-full bg-primary-500/10 text-primary-600 dark:text-primary-400 text-[10px] font-black uppercase tracking-[0.2em]">
+                    <button 
+                      onClick={() => handleCategoryChange(post.category)}
+                      className="px-3 py-1 rounded-full bg-primary-500/10 text-primary-600 dark:text-primary-400 text-[10px] font-black uppercase tracking-[0.2em] hover:bg-primary-500 hover:text-white transition-colors"
+                    >
                       {post.category}
-                    </span>
+                    </button>
                     <div className="w-1 h-1 rounded-full bg-gray-300 dark:bg-gray-600" />
                     <span className="text-xs font-bold text-gray-500 dark:text-gray-300 uppercase tracking-widest">{post.readTime}</span>
                   </div>
@@ -147,7 +200,7 @@ export default function BlogList() {
               <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">{t('noResults')}</h3>
               <p className="text-gray-500 dark:text-gray-400">Try searching for different keywords.</p>
               <button 
-                onClick={clearSearch}
+                onClick={() => { clearSearch(); handleCategoryChange('All'); }}
                 className="mt-6 text-primary-600 font-bold hover:underline"
               >
                 {t('clearFilters')}
@@ -162,7 +215,7 @@ export default function BlogList() {
           <button
             onClick={() => setCurrentPage(prev => Math.max(1, prev - 1))}
             disabled={currentPage === 1}
-            className="p-4 rounded-2xl bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm border border-gray-100 dark:border-gray-700 text-gray-600 dark:text-gray-300 disabled:opacity-30 disabled:cursor-not-allowed hover:bg-white dark:hover:bg-gray-700 transition-colors shadow-sm"
+            className="p-4 rounded-2xl bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700 text-gray-600 dark:text-gray-300 disabled:opacity-30 disabled:cursor-not-allowed hover:bg-white dark:hover:bg-gray-700 transition-colors shadow-sm"
           >
             <ChevronLeft size={20} />
           </button>
@@ -175,7 +228,7 @@ export default function BlogList() {
                 className={`w-12 h-12 rounded-2xl text-sm font-bold transition-all ${
                   currentPage === i + 1 
                     ? 'bg-primary-600 text-white shadow-lg shadow-primary-500/30 scale-110' 
-                    : 'bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm text-gray-500 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 border border-gray-100 dark:border-gray-700 shadow-sm'
+                    : 'bg-white dark:bg-gray-800 text-gray-500 dark:text-gray-300 hover:bg-white dark:hover:bg-gray-700 border border-gray-100 dark:border-gray-700 shadow-sm'
                 }`}
               >
                 {i + 1}
@@ -186,7 +239,7 @@ export default function BlogList() {
           <button
             onClick={() => setCurrentPage(prev => Math.min(totalPages, prev + 1))}
             disabled={currentPage === totalPages}
-            className="p-4 rounded-2xl bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm border border-gray-100 dark:border-gray-700 text-gray-600 dark:text-gray-300 disabled:opacity-30 disabled:cursor-not-allowed hover:bg-white dark:hover:bg-gray-700 transition-colors shadow-sm"
+            className="p-4 rounded-2xl bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700 text-gray-600 dark:text-gray-300 disabled:opacity-30 disabled:cursor-not-allowed hover:bg-white dark:hover:bg-gray-700 transition-colors shadow-sm"
           >
             <ChevronRight size={20} />
           </button>
