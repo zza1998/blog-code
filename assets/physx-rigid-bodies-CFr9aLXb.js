@@ -1,4 +1,4 @@
-import{p as e}from"./createLucideIcon-xTYf-7rV.js";var t=e({default:()=>n}),n=`---
+import{A as e}from"./createLucideIcon-Bp-Gk3eh.js";var t=e({default:()=>n}),n=`---
 title: Mastering Rigid Body Dynamics
 date: 2026-04-15
 category: Tutorial

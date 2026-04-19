@@ -1,4 +1,4 @@
-import{p as e}from"./createLucideIcon-xTYf-7rV.js";var t=e({default:()=>n}),n=`---
+import{A as e}from"./createLucideIcon-Bp-Gk3eh.js";var t=e({default:()=>n}),n=`---
 title: Getting Started with NVIDIA PhysX
 date: 2026-04-19
 category: Physics
